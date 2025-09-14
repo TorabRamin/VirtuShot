@@ -18,7 +18,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
     // In a real application, this would be a secure API call.
     // For this project, we use a simple hardcoded password check.
     setTimeout(() => {
-      if (password === "admin123") {
+      if (password === "moga00704!") {
         onLoginSuccess();
       } else {
         setError("Incorrect password. Please try again.");
