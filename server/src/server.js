@@ -71,12 +71,18 @@ const authMiddleware = (req, res, next) => {
 };
 
 const adminMiddleware = async (req, res, next) => {
-  // This is a placeholder. A real admin check would be more robust.
-  // For now, we allow admin actions from any authenticated user.
-  // In a real app, you'd check a role on the user object:
-  // const user = await User.findById(req.userId);
-  // if (!user || !user.isAdmin) return res.status(403).json({ message: 'Forbidden: Admin access required' });
-  next();
+  try {
+    // userId is attached by the preceding authMiddleware
+    const user = await User.findById(req.userId);
+    if (!user || !user.isAdmin) {
+      return res
+        .status(403)
+        .json({ message: "Forbidden: Admin access required" });
+    }
+    next();
+  } catch (error) {
+    return res.status(500).json({ message: "Error verifying admin status" });
+  }
 };
 
 // --- HELPER FUNCTIONS ---
@@ -159,6 +165,46 @@ app.post("/api/auth/login", async (req, res) => {
     res.status(200).json({ token, user });
   } catch (error) {
     res.status(500).json({ message: "Server error during login" });
+  }
+});
+
+// Admin-specific login
+app.post("/api/admin/login", async (req, res) => {
+  try {
+    const { password } = req.body;
+    const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin";
+
+    if (password !== ADMIN_PASSWORD) {
+      return res
+        .status(401)
+        .json({ message: "Incorrect password. Please try again." });
+    }
+
+    // Find or create the system admin user
+    let adminUser = await User.findOne({ email: "admin@virtushot.system" });
+    if (!adminUser) {
+      const passwordHash = await bcrypt.hash(ADMIN_PASSWORD, 12);
+      adminUser = new User({
+        name: "System Admin",
+        email: "admin@virtushot.system",
+        passwordHash,
+        isAdmin: true,
+        credits: 999999,
+        creditLimit: 999999,
+        status: "active",
+        apiKey: `adm_sk_${generateApiKey()}`,
+      });
+      await adminUser.save();
+    }
+
+    // Issue a token for the admin user
+    const token = jwt.sign({ userId: adminUser.id }, JWT_SECRET, {
+      expiresIn: "1d",
+    });
+    res.status(200).json({ token });
+  } catch (error) {
+    console.error("Admin login error:", error);
+    res.status(500).json({ message: "Server error during admin login" });
   }
 });
 

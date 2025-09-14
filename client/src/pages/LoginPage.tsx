@@ -10,21 +10,32 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setIsLoading(true);
 
-    // In a real application, this would be a secure API call.
-    // For this project, we use a simple hardcoded password check.
-    setTimeout(() => {
-      if (password === "moga00704!") {
-        onLoginSuccess();
-      } else {
-        setError("Incorrect password. Please try again.");
-        setIsLoading(false);
+    try {
+      const response = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Admin login failed");
       }
-    }, 500);
+
+      // On successful login, save the token and proceed
+      localStorage.setItem("authToken", data.token);
+      onLoginSuccess();
+    } catch (err) {
+      setError((err as Error).message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
