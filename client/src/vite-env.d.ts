@@ -1,3 +1,3 @@
-// FIX: Replaced the problematic relative path with the standard Vite client types reference.
-// This is more robust and relies on TypeScript's module resolution.
-/// <reference types="vite/client" />
+// This file is intentionally left blank.
+// The reference to "vite/client" was removed because it was causing a TypeScript
+// error and is not currently needed by the project.

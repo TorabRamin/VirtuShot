@@ -1,64 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VirtuShot: AI Product Photography</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      body {
-        background-color: #f0f2f5;
-      }
-      /* Ensure inputs are readable with a dark theme */
-      input[type="text"],
-      input[type="email"],
-      input[type="password"],
-      input[type="number"],
-      textarea,
-      select {
-        background-color: #374151 !important; /* Corresponds to Tailwind's bg-gray-700 */
-        color: #ffffff !important;
-        border-color: #4b5563 !important; /* Corresponds to Tailwind's border-gray-600 */
-      }
-      /* Adjust placeholder text color for dark background */
-      input::placeholder,
-      textarea::placeholder {
-        color: #9ca3af !important; /* Corresponds to Tailwind's text-gray-400 */
-      }
-      /* Adjust focus styles for dark inputs */
-      input:focus,
-      textarea:focus,
-      select:focus {
-        --tw-ring-color: #6366f1; /* Corresponds to Tailwind's ring-indigo-500 */
-        border-color: #6366f1 !important; /* Corresponds to Tailwind's border-indigo-500 */
-        box-shadow: 0 0 0 2px var(--tw-ring-color);
-      }
-      /* Adjust select dropdown arrow for dark mode (browser-specific) */
-      select {
-        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%239ca3af' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-        background-position: right 0.5rem center;
-        background-repeat: no-repeat;
-        background-size: 1.5em 1.5em;
-        padding-right: 2.5rem;
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-      }
-    </style>
-  <script type="importmap">
+<script type="importmap">
 {
   "imports": {
-    "react": "https://aistudiocdn.com/react@^19.1.1",
-    "react/": "https://aistudiocdn.com/react@^19.1.1/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0",
+    "react/": "https://aistudiocdn.com/react@^19.1.1/",
+    "react": "https://aistudiocdn.com/react@^19.1.1",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/",
     "vite": "https://aistudiocdn.com/vite@^7.1.5",
     "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.0.2"
   }
 }
 </script>
-</head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/index.tsx"></script>
-  </body>
-</html>

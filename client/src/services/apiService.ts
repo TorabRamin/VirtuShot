@@ -1,4 +1,4 @@
-import { UploadedImage, ClientUser } from '../types';
+import { UploadedImage, ClientUser } from './types';
 
 const API_BASE_URL = '/api'; // Proxied by Nginx in production
 

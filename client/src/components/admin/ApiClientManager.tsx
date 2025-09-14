@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { KeyIcon } from '../icons/KeyIcon';
 import { CopyIcon } from '../icons/CopyIcon';
-import { PlusCircleIcon } from '../icons/PlusCircleIcon';
 import { UsageHistoryModal } from './UsageHistoryModal';
 import { AddCreditsModal } from './AddCreditsModal';
 import { EditClientModal } from './EditClientModal';
@@ -183,7 +182,7 @@ export const ApiClientManager: React.FC<ApiClientManagerProps> = ({ clients, set
           <tbody className="divide-y divide-gray-100">
             {clients.map(client => (
               <tr 
-                key={client.id}
+                key={client.id as string}
                 onClick={() => setSelectedClientForHistory(client)}
                 className="bg-white shadow-sm border border-gray-100 hover:bg-indigo-50 transition-colors block md:table-row rounded-lg md:rounded-none mb-4 md:mb-0 cursor-pointer"
               >

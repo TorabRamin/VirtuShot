@@ -1,4 +1,4 @@
-import type { ClientUser } from '../types';
+import type { ClientUser } from './types';
 
 const AUTH_TOKEN_KEY = 'authToken';
 const USER_SESSION_KEY = 'ai_photoshoot_session';
