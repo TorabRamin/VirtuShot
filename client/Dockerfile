@@ -4,9 +4,11 @@ FROM node:18-alpine AS build
 WORKDIR /app
 
 # Copy package.json and install dependencies
-COPY package.json ./
-# Use npm ci for faster, more reliable builds
-RUN npm ci
+# Using package*.json will copy both package.json and package-lock.json if it exists
+COPY package*.json ./
+
+# Use npm install - it's more flexible than npm ci if a lock file is missing
+RUN npm install
 
 # Copy the rest of the application source code
 COPY . .
